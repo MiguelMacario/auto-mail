@@ -33,14 +33,13 @@ public class EmailSenderService {
 
     public void sendEmail(EmailSenderRequestDTO data) {
         Email email = emailService.saveIfNotExist(data.email());
-        System.out.println(email);
         Message message = messageRepository.findById(data.messageId()).orElseThrow(() -> new MessageNotFoundEcxeption("Message not found"));
         Type type = message.getType();
         EmailHistory emailHistory = new EmailHistory(email, message, type);
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(sender);
-            mailMessage.setTo(data.email());
+            mailMessage.setTo(email.getEmail());
             mailMessage.setSubject(type.getType());
             mailMessage.setText(message.getText());
             javaMailSender.send(mailMessage);

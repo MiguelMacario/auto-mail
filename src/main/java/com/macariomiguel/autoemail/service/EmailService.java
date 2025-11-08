@@ -14,11 +14,8 @@ public class EmailService {
     }
 
     public Email saveIfNotExist(String email) {
-        boolean exists = emailRepository.findByEmail(email).isPresent();
-        if (!exists) {
-            emailRepository.save(new Email(email));
-        }
-        return emailRepository.findByEmail(email).get();
+        return emailRepository.findByEmail(email)
+                .orElseGet(() -> emailRepository.save(new Email(email)));
     }
 
 }

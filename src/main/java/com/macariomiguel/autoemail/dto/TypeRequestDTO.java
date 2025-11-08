@@ -1,4 +1,4 @@
 package com.macariomiguel.autoemail.dto;
 
-public record TypeRequestDTO(String typeName) {
+public record TypeRequestDTO(String name) {
 }
